@@ -1,7 +1,5 @@
 function getPlaylistCookie() {
-  // There can be multiple cookies with the name PlaylistTrackList(id), so we need to get them all.
-
-  const cookies = document.cookie.split(";");
+  const cookies = document.cookie ? document.cookie.split("; ") : [];
   let playlistTracks = [];
   for (let i = 0; i < cookies.length; i++) {
     const cookie = cookies[i];

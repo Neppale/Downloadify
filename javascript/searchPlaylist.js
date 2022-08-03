@@ -1,5 +1,6 @@
 async function searchPlaylist() {
   const playlistTrackIds = getTrackIdsCookie();
+  const playlist = getPlaylistCookie();
 
   if (playlistTrackIds.length > 0) {
     console.log("[SEARCH] Playlist already searched.");
@@ -7,22 +8,21 @@ async function searchPlaylist() {
     return;
   }
 
-  const playlist = getPlaylistCookie();
   if (playlist.length === 0) {
     makeInvisible("loadingDownload");
     return;
   }
 
-  // Every song takes 1.5 seconds to search. For every 25 songs, we need to wait 30 seconds to prevent the API from blocking the request.
-  const estimatedTime = Math.ceil(playlist.length / 25) * 30 * 2;
-  const estimatedTimeMinutes = Math.floor(estimatedTime / 60);
+  var estimatedTimeMinutes = Math.ceil((Math.ceil(playlist.length / 25) * 30 * 2) / 60);
+
+  if (playlist.length < 10) estimatedTimeMinutes = 1;
 
   makeVisible("loadingDownload");
   const progressMessage = document.getElementById("progressMessage");
-  progressMessage.innerHTML = `Gathering track data. This process usually takes a long time, please be patient. Estimated time: ${estimatedTimeMinutes} minutes.`;
-  console.log(
-    "[SEARCH] This process usually takes a long time, please be patient."
-  );
+  progressMessage.innerHTML = `Gathering track data. This process usually takes a long time, please be patient. Estimated time: ${estimatedTimeMinutes} ${
+    estimatedTimeMinutes === 1 ? "minute" : "minutes"
+  }.`;
+  console.log("[SEARCH] This process usually takes a long time, please be patient.");
 
   var options = {
     method: "GET",
@@ -40,27 +40,30 @@ async function searchPlaylist() {
     if (i % 25 === 0 && i !== 0) {
       await new Promise((r) => setTimeout(r, 30000));
     } else {
-      await new Promise((r) => setTimeout(r, 1000));
+      await new Promise((r) => setTimeout(r, 500));
     }
 
-    const response = await fetch(
+    var response = await fetch(
       `https://simple-youtube-search.p.rapidapi.com/search?query=${currentTrack}&type=video&safesearch=false`,
       options
     );
-    if (response.status === 429) {
-      console.log("[SEARCH] Too many requests. Switching headers.");
-      options = switchHeaders();
-    }
-    const responseJson = await response.json();
-    const videoId = responseJson.results[0]?.id;
 
-    // Don't push the videoId if it's already in the array.
-    if (!youtubeIds.includes(videoId)) {
-      youtubeIds.push(videoId);
-      console.log(
-        `[SEARCH] Found ${currentTrack.replace(" audio", "")} (${videoId})`
+    if (response.status === 429) {
+      console.warn("[SEARCH] Too many requests. Switching headers.");
+      options = await switchHeaders();
+      await new Promise((r) => setTimeout(r, 5000));
+      response = await fetch(
+        `https://simple-youtube-search.p.rapidapi.com/search?query=${currentTrack}&type=video&safesearch=false`,
+        options
       );
     }
+
+    const responseJson = await response.json();
+    const videoId = findCorrectVideoId(responseJson, currentTrack);
+    if (videoId) {
+      youtubeIds.push(videoId);
+      console.log(`[SEARCH] Found track ${i + 1} of ${playlist.length} tracks.`);
+    } else console.log(`[SEARCH] Track ${i + 1} not found.`);
   }
   setTrackIdsCookie(youtubeIds);
   console.log("[SEARCH] Search complete!");

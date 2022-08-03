@@ -6,9 +6,7 @@ function setTrackIdsCookie(trackIds) {
 
   for (let i = 0; i < numberOfCookies; i++) {
     const cookieName = `playlistTrackIds${i}`;
-    const cookieValue = trackIds
-      .slice(i * trackIdsPerCookie, (i + 1) * trackIdsPerCookie)
-      .join(",");
+    const cookieValue = trackIds.slice(i * trackIdsPerCookie, (i + 1) * trackIdsPerCookie).join(",");
     document.cookie = `${cookieName}=${cookieValue};path=/`;
   }
 }

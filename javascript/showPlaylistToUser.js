@@ -13,14 +13,12 @@ function showPlaylistToUser(playlist) {
   playlistDiv.style.display = "block";
 
   const playlistTracks = playlist.tracks.items.map((item) => item.track.name);
-  const playlistArtists = playlist.tracks.items.map(
-    (item) => item.track.artists[0].name
-  );
+  const playlistArtists = playlist.tracks.items.map((item) => item.track.artists[0].name);
 
   var playlistTracksAndArtists = [];
   for (let i = 0; i < playlistTracks.length; i++) {
-    const currentTrack = playlistTracks[i].replace(",", "");
-    const currentArtist = playlistArtists[i].replace(",", "");
+    const currentTrack = playlistTracks[i].replace(",", "").replace(";", "");
+    const currentArtist = playlistArtists[i].replace(",", "").replace(";", "");
     playlistTracksAndArtists.push(`${currentArtist} - ${currentTrack}`);
   }
 
