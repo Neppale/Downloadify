@@ -1,0 +1,194 @@
+body {
+  display: table-cell;
+  vertical-align: middle;
+  margin: auto;
+  background-color: #181818;
+  height: 100%;
+}
+
+html {
+  display: table;
+  margin: auto;
+  height: 100%;
+}
+
+.appTitle {
+  font-size: 3em;
+  font-weight: bold;
+  font-family: "Open Sans", sans-serif;
+  color: white;
+  text-align: center;
+  margin: 0;
+  padding: 0;
+  padding-top: 10px;
+  padding-bottom: 20px;
+}
+
+p {
+  color: white;
+  font-family: "Open Sans", sans-serif;
+  margin-bottom: 0;
+}
+
+.menuWarning {
+  padding-top: 1em;
+  font-weight: bold;
+  margin-bottom: 3em;
+}
+
+.mainMenu {
+  background-color: #181818;
+  color: white;
+  font-size: 1.2em;
+  text-align: center;
+  padding: 0;
+  margin: 0;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.orMessage {
+  font-size: 1.2em;
+  font-weight: bold;
+  font-family: "Open Sans", sans-serif;
+  color: white;
+  text-align: center;
+  margin: 0;
+  padding: 0;
+  padding-top: 3em;
+  padding-bottom: 3em;
+}
+
+.btn-spotify {
+  padding: 2%;
+  --bs-btn-font-weight: 600;
+  --bs-btn-color: white;
+  --bs-btn-bg: #17c163;
+  --bs-btn-border-color: #17c163;
+  --bs-btn-border-radius: 1rem;
+  --bs-btn-hover-color: white;
+  --bs-btn-hover-bg: #17c163;
+  --bs-btn-hover-border-color: #17c163;
+  --bs-btn-focus-shadow-rgb: #0f6b39;
+  --bs-btn-active-color: white;
+  --bs-btn-active-bg: #0f6b39;
+  --bs-btn-active-border-color: #0f6b39;
+}
+
+.btn-go {
+  --bs-btn-color: white;
+  --bs-btn-bg: #17c163;
+  --bs-btn-border-color: #17c163;
+  --bs-btn-border-radius: 1rem;
+  --bs-btn-hover-color: white;
+  --bs-btn-hover-bg: #17c163;
+  --bs-btn-hover-border-color: #17c163;
+  --bs-btn-focus-shadow-rgb: #0f6b39;
+  --bs-btn-active-color: white;
+  --bs-btn-active-bg: #0f6b39;
+  --bs-btn-active-border-color: #0f6b39;
+}
+
+.btn-download {
+  --bs-btn-color: white;
+  --bs-btn-bg: #17c163;
+  --bs-btn-border-color: #17c163;
+  --bs-btn-border-radius: 1rem;
+  --bs-btn-hover-color: white;
+  --bs-btn-hover-bg: #17c163;
+  --bs-btn-hover-border-color: #17c163;
+  --bs-btn-focus-shadow-rgb: #0f6b39;
+  --bs-btn-active-color: white;
+  --bs-btn-active-bg: #0f6b39;
+  --bs-btn-active-border-color: #0f6b39;
+}
+
+.btn-settings {
+  --bs-btn-color: white;
+  --bs-btn-bg: #17c163;
+  --bs-btn-border-color: #17c163;
+  --bs-btn-border-radius: 1rem;
+  --bs-btn-hover-color: white;
+  --bs-btn-hover-bg: #17c163;
+  --bs-btn-hover-border-color: #17c163;
+  --bs-btn-focus-shadow-rgb: #0f6b39;
+  --bs-btn-active-color: white;
+  --bs-btn-active-bg: #0f6b39;
+  --bs-btn-active-border-color: #0f6b39;
+}
+
+.playlistOptions {
+  text-align: center;
+}
+
+#loadingSpotifySearch,
+#loadingDownload {
+  margin: 2em;
+  visibility: hidden;
+  display: none;
+}
+
+.urlMessage {
+  margin-bottom: 10px;
+}
+
+#playlistInfoAndTracks {
+  display: none;
+  color: white;
+  display: flex;
+  flex-wrap: wrap;
+  visibility: hidden;
+  font-size: 16px;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.playlistInfoHeader {
+  margin: 2em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.playlistInfoHeaderText {
+  margin-left: 5em;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+}
+
+.playlistTracksTable {
+  padding: 5%;
+  margin: 2em;
+  text-align: center;
+  font-size: 0.95em;
+}
+
+#playlistImage {
+  width: 256px;
+  height: 256px;
+  border-radius: 5%;
+  box-shadow: 10px 5px 5px black;
+}
+
+#playlistName {
+  font-size: 3.5em;
+}
+
+.playlistInfo {
+  width: 100%;
+}
+
+#playlistInfo,
+#playlistName {
+  margin-bottom: 0.5em;
+}
+
+.playlistOptions {
+  margin-bottom: 2em;
+}
+
+#progressMessage {
+  margin: 1.5em;
+  text-align: center;
+}

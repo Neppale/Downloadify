@@ -1,0 +1,7 @@
+# This project was originally built on Typescript.
+# The original Typescript files are still available, but are not used in the build.
+/functions
+/types
+
+.env
+
