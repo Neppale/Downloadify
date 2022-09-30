@@ -62,7 +62,10 @@ async function fetchYoutubePlaylist() {
     if (videoId) {
       youtubeIds.push(videoId);
       console.log(`[SEARCH] Found track ${i + 1} of ${playlist.length} tracks.`);
-    } else console.log(`[SEARCH] Track ${i + 1} not found.`);
+    } else {
+      console.log(`[SEARCH] Track ${i + 1} not found.`);
+      youtubeIds.push("not-found");
+    }
   }
   console.log("[SEARCH] Search complete!");
   await findAndSetDownloads(youtubeIds);
