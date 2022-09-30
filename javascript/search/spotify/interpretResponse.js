@@ -5,8 +5,7 @@ async function interpretResponse(response) {
   // Spotify sends a "Not found." error message if the playlist is private, and a "Invalid playlist Id" error message when the playlist is really not found.
 
   if (errorMessage === "Not found.") {
-    spotifyResponse.innerText =
-      "This playlist is private. You need to login with Spotify to use it.";
+    spotifyResponse.innerText = "This playlist is private. You need to login with Spotify to use it.";
     makeInvisible("loadingSpotifySearch");
     return;
   }
@@ -23,17 +22,15 @@ async function interpretResponse(response) {
     return;
   }
 
-  if (response.tracks.total > 100)
-    response = await enrichPlaylistData(response);
+  const enrichedPlaylist = await enrichPlaylistData(response);
 
   if (response.tracks.total > 150) {
-    spotifyResponse.innerText =
-      "This playlist is too big! The maximum playlist size is 150 songs.";
+    spotifyResponse.innerText = "This playlist is too big! The maximum playlist size is 150 songs.";
 
     makeInvisible("loadingSpotifySearch");
     return;
   }
 
   makeInvisible("loadingSpotifySearch");
-  showPlaylistToUser(response);
+  showPlaylistToUser(enrichedPlaylist);
 }

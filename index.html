@@ -5,26 +5,24 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Neppale's Spotify Helper</title>
-  <script src="javascript/showPlaylistToUser.js"></script>
-  <script src="javascript/getBearerToken.js"></script>
-  <script src="javascript/getRemotePlaylistData.js"></script>
-  <script src="javascript/interpretResponse.js"></script>
-  <script src="javascript/getPlaylistByUrlButton.js"></script>
-  <script src="javascript/clearCurrentPlaylist.js"></script>
-  <script src="javascript/downloadPlaylist.js"></script>
-  <script src="javascript/openPlaylistSettings.js"></script>
-  <script src="javascript/getPlaylistCookie.js"></script>
-  <script src="javascript/setPlaylistCookie.js"></script>
-  <script src="javascript/clearPlaylistCookie.js"></script>
-  <script src="javascript/searchPlaylist.js"></script>
-  <script src="javascript/setTrackIdsCookie.js"></script>
-  <script src="javascript/getTrackIdsCookie.js"></script>
-  <script src="javascript/downloadPlaylist.js"></script>
-  <script src="javascript/alternateDownloadPlaylist.js"></script>
-  <script src="javascript/switchVisibility.js"></script>
-  <script src="javascript/enrichPlaylistData.js"></script>
-  <script src="javascript/switchHeaders.js"></script>
-  <script src="javascript/findCorrectVideoId.js"></script>
+  <script src="javascript/local/showPlaylistToUser.js"></script>
+  <script src="javascript/search/spotify/getBearerToken.js"></script>
+  <script src="javascript/search/spotify/getRemotePlaylistData.js"></script>
+  <script src="javascript/search/spotify/interpretResponse.js"></script>
+  <script src="javascript/search/spotify/getPlaylistByUrlButton.js"></script>
+  <script src="javascript/local/clearCurrentPlaylist.js"></script>
+  <script src="javascript/search/downloader/findAndSetDownloads.js"></script>
+  <script src="javascript/local/openPlaylistSettings.js"></script>
+  <script src="javascript/local/getPlaylistCookie.js"></script>
+  <script src="javascript/local/setPlaylistCookie.js"></script>
+  <script src="javascript/local/clearPlaylistCookie.js"></script>
+  <script src="javascript/search/youtube/fetchYoutubePlaylist.js"></script>
+  <script src="javascript/local/setTrackIdsCookie.js"></script>
+  <script src="javascript/local/getTrackIdsCookie.js"></script>
+  <script src="javascript/local/switchVisibility.js"></script>
+  <script src="javascript/search/spotify/enrichPlaylistData.js"></script>
+  <script src="javascript/search/downloader/switchHeaders.js"></script>
+  <script src="javascript/search/youtube/findCorrectVideoId.js"></script>
   <link rel="stylesheet" href="css/bootstrap.min.css">
   <link rel="stylesheet" href="css/main.css">
   <link rel="stylesheet" href="css/mobile.css">
@@ -37,10 +35,10 @@
   <div class="container">
     <div class="row">
       <div class="mainMenu">
-        <h1 class="appTitle">Neppale's Spotify Helper</h1>
+        <h1 class="appTitle">Downloadify</h1>
         <p>Only use the "Login with Spotify" button if you are using this through my official GitHub repository.</p>
         <p>Otherwise, use the second option. Or rather - don't use this at all!</p>
-        <p class="menuWarning">I am not responsible for stolen accounts when using modified versions of this helper.</p>
+        <p class="menuWarning">I am not responsible for stolen accounts when using modified versions of this website.</p>
         <button type="button" class="btn btn-spotify btn-lg col-6 mx-sm-auto" disabled><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-spotify" viewBox="0 0 16 16">
           <path d="M8 0a8 8 0 1 0 0 16A8 8 0 0 0 8 0zm3.669 11.538a.498.498 0 0 1-.686.165c-1.879-1.147-4.243-1.407-7.028-.77a.499.499 0 0 1-.222-.973c3.048-.696 5.662-.397 7.77.892a.5.5 0 0 1 .166.686zm.979-2.178a.624.624 0 0 1-.858.205c-2.15-1.321-5.428-1.704-7.972-.932a.625.625 0 0 1-.362-1.194c2.905-.881 6.517-.454 8.986 1.063a.624.624 0 0 1 .206.858zm.084-2.268C10.154 5.56 5.9 5.419 3.438 6.166a.748.748 0 1 1-.434-1.432c2.825-.857 7.523-.692 10.492 1.07a.747.747 0 1 1-.764 1.288z"></path>
         </svg> Login with Spotify</button>
@@ -70,36 +68,36 @@
             </div>
           </div>
           <div class="playlistOptions">
-            <p id="progressMessage"> Click Download to begin! </p>
+            <p id="progressMessage"> Click Fetch to find available downloads! </p>
             <div class="text-center" id="loadingDownload">
           <div class="spinner-border" role="status">
             <span class="sr-only"></span>
           </div>
         </div>
-            <button type="button" class="btn btn-download btn-lg" onclick="searchPlaylist()"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-download" viewBox="0 0 16 16">
+            <button type="button" class="btn btn-download btn-lg" onclick="fetchYoutubePlaylist()"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-download" viewBox="0 0 16 16">
               <path d="M8 1.5a.5.5 0 0 1 .5.5v7.793l2.146-2.147a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-3-3a.5.5 0 0 1 .708-.708L7.5 9.293V1.5a.5.5 0 0 1 .5-.5z"/>
               <path d="M13.5 14a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1 0-1h9a.5.5 0 0 1 .5.5z"/>
-            </svg> Download</button>
+            </svg> Fetch </button>
             <button type="button" class="btn btn-settings btn-lg" onClick="openPlaylistSettings()"> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-gear" viewBox="0 0 16 16">
               <path d="M8 4.754a3.246 3.246 0 1 0 0 6.492 3.246 3.246 0 0 0 0-6.492zM5.754 8a2.246 2.246 0 1 1 4.492 0 2.246 2.246 0 0 1-4.492 0z"/>
               <path d="M9.796 1.343c-.527-1.79-3.065-1.79-3.592 0l-.094.319a.873.873 0 0 1-1.255.52l-.292-.16c-1.64-.892-3.433.902-2.54 2.541l.159.292a.873.873 0 0 1-.52 1.255l-.319.094c-1.79.527-1.79 3.065 0 3.592l.319.094a.873.873 0 0 1 .52 1.255l-.16.292c-.892 1.64.901 3.434 2.541 2.54l.292-.159a.873.873 0 0 1 1.255.52l.094.319c.527 1.79 3.065 1.79 3.592 0l.094-.319a.873.873 0 0 1 1.255-.52l.292.16c1.64.893 3.434-.902 2.54-2.541l-.159-.292a.873.873 0 0 1 .52-1.255l.319-.094c1.79-.527 1.79-3.065 0-3.592l-.319-.094a.873.873 0 0 1-.52-1.255l.16-.292c.893-1.64-.902-3.433-2.541-2.54l-.292.159a.873.873 0 0 1-1.255-.52l-.094-.319zm-2.633.283c.246-.835 1.428-.835 1.674 0l.094.319a1.873 1.873 0 0 0 2.693 1.115l.291-.16c.764-.415 1.6.42 1.184 1.185l-.159.292a1.873 1.873 0 0 0 1.116 2.692l.318.094c.835.246.835 1.428 0 1.674l-.319.094a1.873 1.873 0 0 0-1.115 2.693l.16.291c.415.764-.42 1.6-1.185 1.184l-.291-.159a1.873 1.873 0 0 0-2.693 1.116l-.094.318c-.246.835-1.428.835-1.674 0l-.094-.319a1.873 1.873 0 0 0-2.692-1.115l-.292.16c-.764.415-1.6-.42-1.184-1.185l.159-.291A1.873 1.873 0 0 0 1.945 8.93l-.319-.094c-.835-.246-.835-1.428 0-1.674l.319-.094A1.873 1.873 0 0 0 3.06 4.377l-.16-.292c-.415-.764.42-1.6 1.185-1.184l.292.159a1.873 1.873 0 0 0 2.692-1.115l.094-.319z"/>
-            </svg> Settings</button>
+            </svg> Settings </button>
           </div>
         </div>
-        <!-- <div class="playlistTracks">
-          <table class="playlistTracksTable">
+        <div class="table-responsive" id="playlistTableDiv">
+          <table class="table table-hover table-dark border-success" id="playlistTable">
             <thead>
               <tr>
                 <th scope="col">#</th>
-                <th scope="col">Title</th>
+                <th scope="col">Track</th>
                 <th scope="col">Artist</th>
-                <th scope="col">Album</th>
+                <th scope="col">Download</th>
               </tr>
             </thead>
-            <tbody class="playlistTracksBody">
+            <tbody>
             </tbody>
           </table>
-        </div> -->
+        </div>
       </div>
     </div>
   </div>

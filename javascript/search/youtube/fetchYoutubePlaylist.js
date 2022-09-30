@@ -1,4 +1,4 @@
-async function searchPlaylist() {
+async function fetchYoutubePlaylist() {
   const playlistTrackIds = getTrackIdsCookie();
   const playlist = getPlaylistCookie();
 
@@ -36,7 +36,6 @@ async function searchPlaylist() {
 
   for (let i = 0; i < playlist.length; i++) {
     var currentTrack = playlist[i] + " audio";
-    // After 25 requests, wait 30 seconds before making another request. This is to prevent the API from blocking the request.
     if (i % 25 === 0 && i !== 0) {
       await new Promise((r) => setTimeout(r, 30000));
     } else {
@@ -65,7 +64,8 @@ async function searchPlaylist() {
       console.log(`[SEARCH] Found track ${i + 1} of ${playlist.length} tracks.`);
     } else console.log(`[SEARCH] Track ${i + 1} not found.`);
   }
-  setTrackIdsCookie(youtubeIds);
   console.log("[SEARCH] Search complete!");
-  await downloadPlaylist();
+  await findAndSetDownloads(youtubeIds);
+  progressMessage.innerHTML = "Search complete! You can now download the playlist.";
+  makeInvisible("loadingDownload");
 }
