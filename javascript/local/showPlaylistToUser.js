@@ -41,6 +41,6 @@ async function showPlaylistToUser(playlist) {
     cell1.innerHTML = i + 1;
     cell2.innerHTML = currentTrack;
     cell3.innerHTML = currentArtist;
-    cell4.innerHTML = `<button id="downloadButton${i}" class="btn btn-download-unavailable btn-lg">Download</button>`;
+    cell4.innerHTML = `<button id="downloadButton${i}" class="btn btn-download-unavailable" disabled> Download </button>`;
   }
 }

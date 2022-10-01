@@ -24,12 +24,12 @@ async function interpretResponse(response) {
 
   const enrichedPlaylist = await enrichPlaylistData(response);
 
-  if (response.tracks.total > 150) {
-    spotifyResponse.innerText = "This playlist is too big! The maximum playlist size is 150 songs.";
+  // if (response.tracks.total > 150) {
+  //   spotifyResponse.innerText = "This playlist is too big! The maximum playlist size is 150 songs.";
 
-    makeInvisible("loadingSpotifySearch");
-    return;
-  }
+  //   makeInvisible("loadingSpotifySearch");
+  //   return;
+  // }
 
   makeInvisible("loadingSpotifySearch");
   showPlaylistToUser(enrichedPlaylist);

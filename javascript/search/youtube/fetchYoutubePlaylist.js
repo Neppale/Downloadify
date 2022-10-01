@@ -12,16 +12,16 @@ async function fetchYoutubePlaylist() {
     makeInvisible("loadingDownload");
     return;
   }
-
-  var estimatedTimeMinutes = Math.ceil((Math.ceil(playlist.length / 25) * 30 * 2) / 60);
+  const estimatedPauseTime = Math.floor(playlist.length / 25) * 30;
+  const estimatedTimeSeconds = 3 * playlist.length + estimatedPauseTime;
+  const estimatedTimeMinutes = Math.floor(estimatedTimeSeconds / 60);
+  const estimatedTimeString = estimatedTimeMinutes + "min" + (estimatedTimeSeconds % 60).toFixed(0) + "s";
 
   if (playlist.length < 10) estimatedTimeMinutes = 1;
 
   makeVisible("loadingDownload");
   const progressMessage = document.getElementById("progressMessage");
-  progressMessage.innerHTML = `Gathering track data. This process usually takes a long time, please be patient. Estimated time: ${estimatedTimeMinutes} ${
-    estimatedTimeMinutes === 1 ? "minute" : "minutes"
-  }.`;
+  progressMessage.innerHTML = `Gathering track data. This process usually takes a long time, please be patient. Estimated time: ${estimatedTimeString}`;
   console.log("[SEARCH] This process usually takes a long time, please be patient.");
 
   var options = {
@@ -42,33 +42,44 @@ async function fetchYoutubePlaylist() {
       await new Promise((r) => setTimeout(r, 500));
     }
 
-    var response = await fetch(
+    var youtubeResponse = await fetch(
       `https://simple-youtube-search.p.rapidapi.com/search?query=${currentTrack}&type=video&safesearch=false`,
       options
     );
 
-    if (response.status === 429) {
+    if (youtubeResponse.status === 429) {
       console.warn("[SEARCH] Too many requests. Switching headers.");
       options = await switchHeaders();
       await new Promise((r) => setTimeout(r, 5000));
-      response = await fetch(
+      youtubeResponse = await fetch(
         `https://simple-youtube-search.p.rapidapi.com/search?query=${currentTrack}&type=video&safesearch=false`,
         options
       );
     }
 
-    const responseJson = await response.json();
-    const videoId = findCorrectVideoId(responseJson, currentTrack);
+    const youtubeResponseJson = await youtubeResponse.json();
+    const videoId = findCorrectVideoId(youtubeResponseJson, currentTrack);
     if (videoId) {
-      youtubeIds.push(videoId);
-      console.log(`[SEARCH] Found track ${i + 1} of ${playlist.length} tracks.`);
-    } else {
-      console.log(`[SEARCH] Track ${i + 1} not found.`);
-      youtubeIds.push("not-found");
+      const downloaderResponse = await fetch(`https://api.vevioz.com/api/button/mp3/${videoId}`);
+      const downloaderResponseString = await downloaderResponse.text();
+      if (downloaderResponseString === null || downloaderResponse.status !== 200) continue;
+
+      const downloadLink = downloaderResponseString.match(
+        /https:\/\/cdn-\d+\.vevioz\.com\/download\/[a-zA-Z_\-0-9]{11}\/mp3\/192\/\d{10}\/[a-zA-Z0-9]{64}\/0/
+      )[0];
+
+      if (!downloadLink) return;
+
+      const downloadButton = document.getElementById(`downloadButton${i}`);
+      console.log(`[DOWNLOAD] Found the song: ${playlist[i]}`);
+      downloadButton.removeAttribute("disabled");
+      downloadButton.classList.add("btn-download");
+      downloadButton.onclick = function () {
+        window.location.href = downloadLink;
+      };
     }
   }
   console.log("[SEARCH] Search complete!");
-  await findAndSetDownloads(youtubeIds);
   progressMessage.innerHTML = "Search complete! You can now download the playlist.";
   makeInvisible("loadingDownload");
 }

@@ -104,17 +104,32 @@ p {
 }
 
 .btn-download-unavailable {
+  --bs-btn-font-weight: 600;
   --bs-btn-color: white;
-  --bs-btn-bg: #181818;
-  --bs-btn-border-color: #181818;
+  --bs-btn-bg: #17c163;
+  --bs-btn-border-color: #17c163;
   --bs-btn-border-radius: 1rem;
   --bs-btn-hover-color: white;
-  --bs-btn-hover-bg: #181818;
-  --bs-btn-hover-border-color: #181818;
-  --bs-btn-focus-shadow-rgb: #181818;
+  --bs-btn-hover-bg: #17c163;
+  --bs-btn-hover-border-color: #17c163;
+  --bs-btn-focus-shadow-rgb: #0f6b39;
   --bs-btn-active-color: white;
-  --bs-btn-active-bg: #181818;
-  --bs-btn-active-border-color: #181818;
+  --bs-btn-active-bg: #0f6b39;
+  --bs-btn-active-border-color: #0f6b39;
+}
+
+.table-spotify {
+  --bs-table-color: #fff;
+  --bs-table-bg: #181818;
+  --bs-table-border-color: #373b3e;
+  --bs-table-striped-bg: #2c3034;
+  --bs-table-striped-color: #fff;
+  --bs-table-active-bg: #373b3e;
+  --bs-table-active-color: #fff;
+  --bs-table-hover-bg: #323539;
+  --bs-table-hover-color: #fff;
+  color: var(--bs-table-color);
+  border-color: var(--bs-table-border-color);
 }
 
 .btn-settings {
