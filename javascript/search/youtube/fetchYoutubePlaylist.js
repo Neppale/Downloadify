@@ -1,12 +1,5 @@
 async function fetchYoutubePlaylist() {
-  const playlistTrackIds = getTrackIds();
   const playlist = getPlaylist();
-
-  if (playlistTrackIds.length > 0) {
-    console.log("[SEARCH] Playlist already searched.");
-    await downloadPlaylist();
-    return;
-  }
 
   if (playlist.length === 0) {
     makeInvisible("loadingDownload");
@@ -17,11 +10,9 @@ async function fetchYoutubePlaylist() {
   const estimatedTimeMinutes = Math.floor(estimatedTimeSeconds / 60);
   const estimatedTimeString = estimatedTimeMinutes + "min" + (estimatedTimeSeconds % 60).toFixed(0) + "s";
 
-  if (playlist.length < 10) estimatedTimeMinutes = 1;
-
   makeVisible("loadingDownload");
   const progressMessage = document.getElementById("progressMessage");
-  progressMessage.innerHTML = `Gathering track data. This process usually takes a long time, please be patient. Estimated time: ${estimatedTimeString}`;
+  progressMessage.innerHTML = `Fetching download links. Estimated time: ${estimatedTimeString}`;
   console.log("[SEARCH] This process usually takes a long time, please be patient.");
 
   var options = {
@@ -31,8 +22,6 @@ async function fetchYoutubePlaylist() {
       "X-RapidAPI-Host": "simple-youtube-search.p.rapidapi.com",
     },
   };
-
-  var youtubeIds = [];
 
   for (let i = 0; i < playlist.length; i++) {
     var currentTrack = playlist[i] + " audio";
