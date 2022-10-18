@@ -22,7 +22,7 @@ async function showPlaylistToUser(playlist) {
     playlistTracksAndArtists.push(`${currentArtist} - ${currentTrack}`);
   }
 
-  setPlaylistCookie(playlistTracksAndArtists.toString());
+  setPlaylist(playlistTracksAndArtists.toString());
 
   const playlistTableElement = document.getElementById("playlistTable");
 

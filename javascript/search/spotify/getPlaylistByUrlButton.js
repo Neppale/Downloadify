@@ -1,6 +1,6 @@
 async function getPlaylistByUrlButton() {
   clearCurrentPlaylist();
-  clearPlaylistCookie();
+  clearLocalStorage();
 
   document.getElementById("spotifyResponse").innerHTML = "";
 

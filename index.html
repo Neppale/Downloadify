@@ -13,12 +13,8 @@
   <script src="javascript/search/spotify/getPlaylistByUrlButton.js"></script>
   <script src="javascript/local/clearCurrentPlaylist.js"></script>
   <script src="javascript/local/openPlaylistSettings.js"></script>
-  <script src="javascript/local/getPlaylistCookie.js"></script>
-  <script src="javascript/local/setPlaylistCookie.js"></script>
-  <script src="javascript/local/clearPlaylistCookie.js"></script>
+  <script src="javascript/local/localStorage.js"></script>
   <script src="javascript/search/youtube/fetchYoutubePlaylist.js"></script>
-  <script src="javascript/local/setTrackIdsCookie.js"></script>
-  <script src="javascript/local/getTrackIdsCookie.js"></script>
   <script src="javascript/local/switchVisibility.js"></script>
   <script src="javascript/search/spotify/enrichPlaylistData.js"></script>
   <script src="javascript/search/downloader/switchHeaders.js"></script>
@@ -31,7 +27,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
 </head>
 </head>
-<body onload="clearPlaylistCookie()">
+<body onload="clearLocalStorage()">
   <div class="container">
     <div class="row">
       <div class="mainMenu">

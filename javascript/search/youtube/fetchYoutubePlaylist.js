@@ -1,6 +1,6 @@
 async function fetchYoutubePlaylist() {
-  const playlistTrackIds = getTrackIdsCookie();
-  const playlist = getPlaylistCookie();
+  const playlistTrackIds = getTrackIds();
+  const playlist = getPlaylist();
 
   if (playlistTrackIds.length > 0) {
     console.log("[SEARCH] Playlist already searched.");
