@@ -12,8 +12,17 @@ async function showPlaylistToUser(playlist) {
   playlistDiv.style.visibility = "visible";
   playlistDiv.style.display = "block";
 
-  const playlistTracks = playlist.tracks.items.map((item) => item.track.name);
-  const playlistArtists = playlist.tracks.items.map((item) => item.track.artists[0].name);
+  let playlistTracks = playlist.tracks.items.map((item) => {
+    if (!item.track) return null;
+    return item.track.name;
+  });
+  let playlistArtists = playlist.tracks.items.map((item) => {
+    if (!item.track) return null;
+    return item.track.artists[0].name;
+  });
+
+  playlistTracks = playlistTracks.filter((item) => item);
+  playlistArtists = playlistArtists.filter((item) => item);
 
   var playlistTracksAndArtists = [];
   for (let i = 0; i < playlistTracks.length; i++) {
